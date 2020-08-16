@@ -1,0 +1,109 @@
+:root{
+    --color--background:#f1c5c5;
+    --color--box:#faf0af;
+    --color--button:#8bcdcd;
+}
+
+*,*::before,*::after{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+html{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 62.5%;
+}
+.container{
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color:var(--color--background);
+
+}
+
+.container--box{
+    width: 40%;
+    height: 60%;
+
+    background-color: var(--color--box);
+
+    border: 3px solid rgba(43, 41, 41, 0.61);
+    border-radius: 6px;
+
+    display: flex;
+    align-items: center;
+}
+.information--img{
+    width: 50%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.information--img img{
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 2.5px solid black;
+    border-radius: 50%;
+
+    margin-bottom:1rem;
+}
+.information--img input{
+    display: none;
+}
+.information--img label{
+    cursor: pointer;
+
+    border: 1.5px solid rgba(43, 41, 41, 0.61);
+    border-radius: 6px;
+    padding: 5px 10px;
+}
+
+.information--text{
+    width: 50%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.userId{
+    margin: 1em 0 1rem 0;
+    letter-spacing: 1.5px;
+
+}
+.userName{
+    margin-bottom: 1rem;
+    letter-spacing: 1.5px;
+    font-size: 1.4rem;
+    
+
+}
+.userNickName{
+    margin-bottom: 3rem;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+
+    border: 2px solid rgba(43, 41, 41, 0.61);
+    border-radius: 6px;
+    padding: 5px 10px;
+    outline: none;
+}
+.clickChange{
+    padding: 5px 10px;
+    background-color:var(--color--button) ;
+    border: 2px solid rgba(43, 41, 41, 0.61);
+    border-radius: 6px;
+
+    outline: none;
+    cursor: pointer;
+}
+

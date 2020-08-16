@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+<body>
+    <a href="/users/test/room">Click test</a>
+    <div class="box--active">
+        <li class='user--active' id=""></li>
+    </div>
+    
+    <% if(user){%>
+        <div class="box--room">
+
+        </div>
+        <form  id="add--room" >
+            <input type="text" name="nameRoom" placeholder="Tạo phòng" id="nameRoom">
+            <button type="submit" id="create">Tạo phòng</button>
+        </form>
+        <a href="/logout">Dang xuat</a>
+        <input type="hidden" name="username" value="<%= user._id %>" id="userid">
+        Hello: <span id="nameHello"><%= user.nickname %></span>
+        <div class="box--content">
+        <div class="text--box"> 
+            <div class="content">
+            <% data.forEach(el=>{%>
+                <% if(el.iduser == user.id){%>
+                    <div class="you" style="color: blue;">
+                        <span><%= el.nameuser %>: <%= el.content%></span>
+                    </div>
+               <% }else if(el.iduser!=user.id){%>
+                <div class="other" style="color: red;">
+                   <span><%= el.nameuser %>: <%= el.content %></span>
+               </div>
+                <%} %> 
+                <%}) %> 
+            </div>
+            <input type="text" placeholder="Nhập tin nhắn" id="mess">
+            <button type="submit" id="send">Gửi</button>
+        </div>
+        </div>
+       
+
+        <div class="box----chat">
+            
+        </div>
+        <%}else{%>
+            room
+            <%} %> 
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/javascripts/index.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,400;0,700;1,500;1,600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="/stylesheets/stylePrivate.css" />
+    <title>Chat</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="container__header">
+        <div class="container__header--box">
+         <input type="hidden" name="" id="idUser" value="<%=user._id%>">
+
+          <ul>
+            <img src="" alt="">
+            <li><span id="nameUser"><%= user.nickname%></span></li>
+            <li>
+              <a href="/users/room" id="backHome">Về sảnh</a>
+            </li>
+            <li><a href="/users/information/<%= user._id%>">Thông tin cá nhân</a></li>
+            <li><a href="/logout" id="logOut">Đăng xuất</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="container__main">
+        <div class="main--userActive">
+          <h3>Danh sách đang online</h3>
+          <div class="main--userActive--box">
+          </div>
+        </div>
+        <div class="main--chat">
+          <div class="main--chat--box">
+            <div class="box--chat">
+          
+            </div>
+            <div class="input--chat">
+              <span class="notification--mess"
+                >Ai đó đang viết tin nhắn ......</span
+              >
+              <input
+                type="text"
+                name="messUser"
+                id="messUser"
+                placeholder="Nhập tin nhắn"
+              />
+              <button type="submit" id="sendMess">
+                <i class="fa fa-paper-plane" aria-hidden="true"></i>
+              </button>
+              <input type="file" id="inputSendImg" style="display: none;" />
+              <label for="inputSendImg" id="clickFile"
+                ><i class="fa fa-picture-o" aria-hidden="true"></i
+              ></label>
+            </div>
+          </div>
+        </div>
+        <div class="main--info">
+            <div class="information--box">
+                <span class="userId"></span>
+                <img src="https://i.pinimg.com/564x/03/79/8f/03798f0fff04e128a0b44d5645408ea5.jpg" alt="">
+                <span class="userName"></span>
+            </div>
+            <div class="imgShow">
+              <div class="remove--img">
+                <i class="fa fa-times" aria-hidden="true"></i>
+              </div>
+              <img src="" alt="" id="imgShow">
+            </div>
+        </div>
+        <input type="hidden" id="idone" >
+        <input type="hidden" id="idtwo" >
+      </div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/javascripts/chatPrivate.js"></script>
+  </body>
+</html>

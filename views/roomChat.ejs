@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,400;0,700;1,500;1,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/stylesheets/styleRoomChat.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Room</title>
+  </head>
+  <body>
+      <input type="hidden" name="username" value="<%= user._id %>" id="userid">
+      <% if(user){%> 
+        <div class="container">
+      <div class="container__box">
+        <div class="container__box--header">
+          <h2>Sảnh</h2>
+          <ul>
+            <li>Hello: <span id="nameHello"><%= user.nickname %></span></li>
+            <li><a href="/users/test/room" id="messPrivate">Chat riêng</a></li>
+            <li><a href="/users/information/<%= user._id%>">Thông tin cá nhân</a></li>
+            <li><a href="/logout" id="logOut">Đăng xuất</a></li>
+          </ul>
+        </div>
+        <div class="container__box--content">
+          <div class="content--chat-box">
+            <div class="content--chat">
+              <% data.forEach(el=>{%>
+                <% if(el.iduser == user.id){%>
+                    <div class="chat__me">
+                        <span class="me--name info" id="<%= el.iduser%>"><%= el.nameuser %></span>
+                        <p class="me--mess">
+                            <%= el.content%>
+                        </p>
+                        <% if(el.img!=null){%>
+                          <img src="<%= el.img %>" id="mess--img"  alt="">
+                          <%} %> 
+                      </div>
+                    <%}else if(el.iduser!=user.id){%>
+                        <div class="chat__friend">
+                            <span class="friend--name info" id="<%= el.iduser%>"><%= el.nameuser %></span>
+                            <p class="friend--mess">
+                                <%= el.content%>
+                            </p>
+                            <% if(el.img!=null){%>
+                              <img src="<%= el.img %>" id="mess--img"  alt="">
+                              <%} %> 
+                          </div>
+                        <%} %> 
+                <%})%> 
+              </div>
+                <div class="notification--chat">
+                  <span>........................................</span>
+                </div>
+          </div>
+
+          <div class="content--other">
+              <div class="other--information">
+                  
+                  
+              </div>
+              <div class="other--room">
+                  <div class="room--add">
+                    <input type="text" name="nameRoom" placeholder="Tạo phòng" id="nameRoom">
+                    <span type="submit" id="create"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                  </div>
+                  <span>Danh sách nhóm của bạn</span>
+                  <ul class="list--group">
+                  </ul>
+              </div>
+          </div>
+          
+        </div>
+      </div>
+      <div class="chat--box">
+        <div class="chat--input">
+          <input type="text" name="messUser" id="messUser" placeholder="Nhập tin nhắn">
+          <button type="submit" id="sendMess"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+          <input type="file" id="file">
+          <label for="file" id="clickFile"><i class="fa fa-picture-o" aria-hidden="true"></i></label>
+        </div>
+        <div class="chat--img">
+          <img src="" alt="" id="imgDemo">
+        </div>
+      </div>
+      
+    </div>
+
+    <%}else{%>
+        room
+        
+        <%}%>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/javascripts/RoomChat.js"></script>
+  </body>
+</html>

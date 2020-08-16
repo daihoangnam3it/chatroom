@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box--chat{
+            background-color: antiquewhite;
+            width: 200px;
+            height: 500px;
+            overflow: scroll;
+        }
+        span{
+            cursor: pointer;;
+        }
+        .you{
+            color: red;
+           
+        }
+        .me{
+            color: blue;
+        }
+        #sendMess{
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <span id="idGroup"><%= data._id%></span>
+    <h2><%= data.name %></h2>
+    <input type="text" value="<%= user._id %>" id="idPublic" >
+    <span id="namePublic"><%= user.nickname %></span>
+    <input type="text" id="addUserInput" name="nameUser" placeholder="Thêm thành viên: Nhập ID vào">
+    <span id="addUserBtn" style="cursor: pointer;">Thêm</span>
+    <% if(data.user[0] == user._id){%>
+        <a href="/users/room/group--removes/<%= data._id%>">Xoá nhóm</a>
+
+        <input type="text" id="removeUserInput" name="nameUser" placeholder="Xoá thành viên: Nhập ID vào">
+        <span id="removeUserBtn" style="cursor: pointer;">Xoá</span>
+        <script>
+            var inputRemoveUser=document.getElementById('removeUserInput');
+            var btnRemoveUser=document.getElementById('removeUserBtn');
+            // Xoá thành viên nè
+            btnRemoveUser.addEventListener('click',()=>{
+            var userRemoved={
+            name:inputRemoveUser.value
+        }
+    fetch('/users/room/group--remove/'+idGroup.innerHTML,{
+        method:'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+        body:JSON.stringify(userRemoved)
+    }).then(res=>res.json()).then(data=>console.log(data));
+})
+        </script>
+        <%} %> 
+
+    <div class="box--chat">
+        <% data.content.forEach(el=>{%>
+            <% if(el.idUser == user._id){%>
+                <span id="<%= el.idUser%>" class="info me"><%= el.name%>: <%= el.mess %></span> <br>
+                
+                <%}else{%>
+                <span id="<%= el.idUser%>" class="info you"><%= el.name%>: <%= el.mess %></span> <br>
+               <% } %> 
+            <%}) %> 
+    </div>
+   <input type="text" name="messUser" id="messUser" placeholder="Nhập tin nhắn">
+   <span id="sendMess">Gửi tin nhắn</span>
+   <input type="file" id="inputSendImg"> <br>
+    <img src="" alt="" id="imgSend" style="max-width: 100px;max-height: 100px;">
+   <script src="/socket.io/socket.io.js"></script>
+    <script src="/javascripts/group.js"></script>
+</body>
+</html>

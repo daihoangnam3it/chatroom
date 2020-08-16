@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,400;0,700;1,500;1,600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="/stylesheets/styleinformation.css">
+    <title>Thông tin cá nhân</title>
+</head>
+<body>
+    <div class="container">
+        <div class="container--box">
+          <% include notification/messages%> 
+
+            <div class="information--img">
+                <% if(data.img!=null){%>
+                    <img src="<%= data.img %>"  alt="" id="imgShow">
+                    <%}else{%>
+                        <img src="https://i.pinimg.com/564x/5d/a4/fd/5da4fd2c145b9ff97b19a18603009d60.jpg" alt="" id="imgShow">
+                        <%} %> 
+                <input type="file" id="img">
+                <label for="img">Đổi ảnh</label>
+            </div>
+            <div class="information--text">
+                <span class="userId"><%= data._id %></span>
+                <span class="userName"><%= data.username%></span>
+                <input type="text" value="<%= data.nickname %>"class="userNickName">
+                <input type="submit" class="clickChange" value="Cập nhật">
+            </div>
+        </div>
+    </div>
+    <script src="/javascripts/information.js"></script>
+</body>
+</html>

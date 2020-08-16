@@ -1,0 +1,269 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var app = require('../app');
+var debug = require('debug')('socket:server');
+var http = require('http');
+var User=require('../model/user');
+var Mess=require('../model/Mese');
+var MessS=require('../model/messsingle')
+const { emitKeypressEvents } = require('readline');
+const Room = require('../model/Room');
+
+/**
+ * Get port from environment and store in Express.
+ */
+
+var port = normalizePort(process.env.PORT || '3000');
+app.set('port', port);
+
+/**
+ * Create HTTP server.
+ */
+
+var server = http.createServer(app);
+
+
+
+// Socket io
+var io=require('socket.io')(server);
+
+const userOnl=[];
+let usernames=[];
+let usernamesRoom=[];
+let userOnlRoom=[];
+// Kết nối với socket.io
+io.on('connection',socket=>{
+  // Thông báo khi kết nối thành công
+
+  socket.on('signin',data=>{
+    // console.log(data);
+
+    socket.us=data.username;
+    if(usernames.indexOf(socket.us)>=0){
+      // console.log('DDung')
+      // console.log(userOnl);
+      // console.log(usernames);
+
+      io.sockets.emit('active',userOnl)
+    }else{
+      userOnl.push(data);
+      usernames=userOnl.map(el=>el.username);
+      // console.log(userOnl);
+      // console.log(usernames);
+      io.sockets.emit('active',userOnl)
+    }
+    // console.log('end')
+    // console.log(userOnl);
+  })
+  socket.on('signin--Room',data=>{
+    console.log('room' + data);
+    Room.findOne({_id:data.idGroup},function(err,user){
+      if(user.user.indexOf(data.id)>=0){
+        socket.usR=data.username;
+        if(usernamesRoom.indexOf(socket.usR)>=0){
+          // console.log('DDung')
+          // console.log(userOnl);
+          // console.log(usernames);
+          io.sockets.emit('onl--room',userOnlRoom);
+        }else{
+          userOnlRoom.push(data);
+          usernamesRoom=userOnlRoom.map(el=>el.username);
+          // console.log(userOnl);
+          // console.log(usernames);
+          io.sockets.emit('onl--room',userOnlRoom);
+
+        }
+      }
+    })
+  })
+  socket.on('disconnect',()=>{
+    
+    var b=usernames.indexOf(socket.us);
+    var c=usernamesRoom.indexOf(socket.usR);
+    // console.log(b);
+    if(b>=0){
+      userOnl.splice(b,1);
+      usernames.splice(b,1);
+      
+    }
+    if(c>=0){
+      userOnlRoom.splice(c,1);
+      usernamesRoom.splice(c,1);
+    }
+    // console.log(userOnl);
+    // console.log(socket.us + 'Out');
+    io.sockets.emit('active',userOnl)
+    io.sockets.emit('onl--room',userOnlRoom);
+
+
+  })
+  socket.on('send--mess',data=>{
+    var newMess=new Mess({
+      iduser:data.id,
+      nameuser:data.username,
+      content:data.mess,
+      img:data.img
+    });
+    // console.log(newMess);
+    newMess.save();
+    // console.log("Nhận được: " + data.username);
+    socket.broadcast.emit('sever--send',data)
+  })
+
+  
+
+  socket.on('priva--mess',data=>{
+    // console.log(data);
+    var noti={
+      name:data.name,
+      idSend:data.idtwo,
+      idUser:data.idone,
+    }
+    var mess={
+      iduser:data.idone,
+      name:data.name,
+      mess:data.mess,
+      img:data.img,
+      createAt:data.createAt
+    }
+      function check(n){
+      return (n.iduserone == data.idone || n.iduserone == data.idtwo) &&  (n.idusertwo == data.idone || n.idusertwo == data.idtwo);
+    }
+    MessS.find({},function(err,doc){
+      var arr=doc.filter(check);
+      if(arr.length>0){
+        var id;
+        arr.forEach(el=>id=el._id)
+        MessS.updateMany({_id:id},{$addToSet:{content:mess}},{upsert:true},function(err,ss){
+          // console.log(mess);
+          // console.log('da cap nhat' +  ss);
+         socket.broadcast.emit('sever--noti',noti);
+
+            socket.emit('have--send',"Đã gửi tin");
+        })
+        // MessS.find({_id:id},function(err,con){
+        //   console.log(con);
+        // })
+      }
+    })
+  })
+  socket.on('send--mess-pri',data=>{
+    socket.broadcast.emit('sever--send--mess--prive',data)
+  })
+  socket.on('list--room',data=>{
+    socket.emit('sever--room',data)
+  })
+
+
+
+
+
+  // Nghe tin nhắn từ group lên nè
+  socket.on('user--send--mess-in--group',data=>{
+    console.log('Da nhan duoc tin nhan tu client')
+    socket.broadcast.emit('sever--send--mess-to-group',data)
+    var idGroup=data.idGroup;
+    var idUser=data.idUser;
+    Room.find({_id:idGroup},function(err,doc){
+      doc.forEach(el=>{
+        if(el.user.indexOf(idUser)>=0){
+          Room.update({_id:idGroup},{$addToSet:{content:data}},{upsert:true},function(err,mess){
+            console.log('da luu tin nhan ' + mess);
+            socket.emit('have--send--group',"Đã gửi tin");
+          })
+        }else{
+          console.log('Ko co trong nhosm');
+        }
+      })
+    })
+  })
+
+  // Ai đó đang viết tin nhắn trong nhómnhóm
+  socket.on('notification--mess',data=>{
+    socket.broadcast.emit('sever--notification--mess',data)
+  })
+  socket.on('notification--end--mess',data=>{
+    socket.broadcast.emit('sever--notification--end--mess',data)
+  })
+  // ngoài sảnhsảnh
+  socket.on('notification--mess-r',data=>{
+    socket.broadcast.emit('sever--notification--mess-r',data)
+  })
+  socket.on('notification--end--mess-r',data=>{
+    socket.broadcast.emit('sever--notification--end--mess-r',data)
+  })
+
+})
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(port,()=>{
+  console.log('Đã kết nối với cổng: ' +port);
+});
+server.on('error', onError);
+server.on('listening', onListening);
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+}

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,400;0,700;1,500;1,600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="/stylesheets/styleGroup.css" />
+    <title>Group</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="container__header">
+        <div class="heading--nameGroup">
+          <span id="idGroup"><%= data._id%></span>
+          <h2 id="nameGroup"><%= data.name %></h2>
+        </div>
+        <div class="heading--information">
+          <ul>
+            <li>
+              <span id="namePublic"><%= user.nickname %></span>
+            </li>
+            <li><a href="/users/test/room" id="messPrivate">Chat riêng</a></li>
+            <li><a href="/users/information">Thông tin cá nhân</a></li>
+            <li><a href="/logout" id="logOut">Đăng xuất</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="container__main">
+        <div class="container__main--box">
+          <div class="main--online">
+            <div class="item--online">
+              <h3>Thành viên đang online trong nhóm</h3>
+              <div class="list--item">
+                
+            
+              </div>
+            </div>
+          </div>
+          <div class="main--boxChat">
+            <div class="boxChat--box">
+              <div class="boxChat--content">
+                <% data.content.forEach(el=>{%> <% if(el.idUser == user._id){%>
+                <div class="chat__me">
+                  <span class="me--name info" id="<%= el.idUser%>"
+                    ><%= el.name%></span
+                  >
+                  <p class="me--mess">
+                    <%= el.mess %>
+                  </p>
+                  <% if(el.img != null){%>
+                  <img src="<%= el.img%>" alt="" />
+
+                  <%} %>
+                </div>
+
+                <%}else{%>
+                <div class="chat__friend">
+                  <span class="friend--name info" id="<%= el.idUser%>"
+                    ><%= el.name%></span
+                  >
+                  <p class="friend--mess">
+                    <%= el.mess %>
+                  </p>
+                  <% if(el.img != null){%>
+                  <img src="<%= el.img%>" alt="" />
+
+                  <%} %>
+                </div>
+                <%} %> <%}) %>
+              </div>
+              <div class="boxChat--input">
+                <span class="notification--mess"
+                  >Ai đó đang viết tin nhắn ......</span
+                >
+                <input
+                  type="text"
+                  name="messUser"
+                  id="messUser"
+                  placeholder="Nhập tin nhắn"
+                />
+                <button type="submit" id="sendMess">
+                  <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                </button>
+                <input type="file" id="inputSendImg" style="display: none;" />
+                <label for="inputSendImg" id="clickFile"
+                  ><i class="fa fa-picture-o" aria-hidden="true"></i
+                ></label>
+              </div>
+            </div>
+          </div>
+          <div class="main--info">
+            <div class="main--infoBox">
+              <div class="information--box">
+                <span id="idUserClick"> </span>
+                <img
+                  src="https://i.pinimg.com/564x/25/db/93/25db93296a3ce8cd2d237fd3cf71ff00.jpg"
+                  alt=""
+                />
+                <span id="nameUserClick"> </span>
+              </div>
+              <div class="contact--room">
+                <% if(data.user[0] == user._id){%>
+                <a
+                  href="/users/room/group--removes/<%= data._id%>"
+                  class="removeGroup"
+                  >Xoá nhóm</a
+                >
+                <div class="remove__user">
+                  <input
+                    type="text"
+                    id="removeUserInput"
+                    name="nameUser"
+                    placeholder="Xoá thành viên: Nhập ID vào"
+                  />
+                  <span id="removeUserBtn" style="cursor: pointer;"
+                    ><i class="fa fa-minus-square-o" aria-hidden="true"></i
+                  ></span>
+                </div>
+                <script>
+                  var inputRemoveUser = document.getElementById(
+                    'removeUserInput',
+                  );
+                  var btnRemoveUser = document.getElementById('removeUserBtn');
+                  // Xoá thành viên nè
+                  btnRemoveUser.addEventListener('click', () => {
+                    var userRemoved = {
+                      name: inputRemoveUser.value,
+                    };
+                    fetch('/users/room/group--remove/' + idGroup.innerHTML, {
+                      method: 'POST',
+                      headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify(userRemoved),
+                    })
+                      .then((res) => res.json())
+                      .then(data => {
+                        alert('Đã xoá');
+                      });
+                      inputRemoveUser.value = '';
+                  });
+                </script>
+                <%}else if(data.user[0] !== user._id){%>
+
+                <a
+                  href="/users/room/group--out/<%=data._id%>"
+                  class="removeGroup"
+                  >Rời nhóm</a
+                >
+                <script>
+                  var inputRemoveUser = document.getElementById(
+                    'removeUserInput',
+                  );
+                  var btnRemoveUser = document.getElementById('removeUserBtn');
+                  // Xoá thành viên nè
+                  btnRemoveUser.addEventListener('click', () => {
+                    var userRemoved = {
+                      name: inputRemoveUser.value,
+                    };
+                    fetch('/users/room/group--remove/' + idGroup.innerHTML, {
+                      method: 'POST',
+                      headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify(userRemoved),
+                    })
+                      .then((res) => res.json())
+                      .then((data) => {
+                        inputRemoveUser.value = '';
+                        console.log(data);
+                      });
+                  });
+                </script>
+                <%}%>
+                <div class="add__user">
+                  <input
+                    type="text"
+                    id="addUserInput"
+                    name="nameUser"
+                    placeholder="Thêm thành viên: Nhập ID vào"
+                  />
+                  <span id="addUserBtn" style="cursor: pointer;"
+                    ><i class="fa fa-plus-square-o" aria-hidden="true"></i
+                  ></span>
+                </div>
+              </div>
+              <div class="showImg">
+                <img src="" alt="" id="imgDemo" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <input type="hidden" value="<%= user._id %>" id="idPublic" />
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script src="/javascripts/groups.js"></script>
+  </body>
+</html>

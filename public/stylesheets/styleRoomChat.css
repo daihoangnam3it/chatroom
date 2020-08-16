@@ -1,0 +1,398 @@
+:root{
+    --color--boxChat:#F2D98D;
+    --color--chatMe:#f0dadc;
+    --color--chatYou:#FCF0CF;
+    --color--boxInfo:#eeeef0;
+    --color--boxRoom:#FCF0CF;
+    --color--itemRoom:#f3d1dc;
+
+}
+*,*::after,*::before{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 62.5%;
+}
+
+.container{
+    width: 100%;
+    height: 100vh;
+
+    padding: 0 10px;
+    overflow: hidden;
+   
+}
+
+.container__box{
+    width: 100%;
+    height: 90%;
+
+
+
+}
+
+.container__box--header{
+    background-color: #fff;
+    position: relative;
+    margin: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.container__box--header h2{
+    padding: 5px 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 2rem;
+}
+.container__box--header ul{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 5px 0;
+
+    margin: 2px 0 1px 0;
+
+    list-style: none;
+}
+
+.container__box--header ul li{
+    margin: 0 50px;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.651);
+
+}
+
+.container__box--header ul li a{
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.651);
+
+    padding: 5px 10px;
+    border-radius: 1rem;
+}
+.container__box--header ul li a:hover{
+    background-color: #ffd5cdd8;
+}
+#messPrivate,#logOut{
+    background-color:#ffd5cdd8 ;
+}
+
+.container__box--content{
+    display: flex;
+    align-items: center;
+
+    margin: 0 auto;
+
+    width: 100%;
+    height: 80vh;
+    
+}
+.content--chat-box{
+    width: 80%;
+    height: 80vh;
+    position: relative;
+
+}
+.content--chat{
+    width: 100%;
+    height: 80vh;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow-y: scroll;
+
+    border: 3px solid rgba(0, 0, 0, 0.637);
+    border-radius: 10px;
+
+    padding: 5px 10px 10px 10px;
+    background-color: var(--color--boxChat);
+
+
+}
+.notification--chat{
+    font-size: 2.5rem;
+    letter-spacing: 5px;
+   position: absolute;
+   bottom: 10px;
+   left: 10px;
+   animation: up .5s infinite;
+   opacity: 0;
+   visibility: hidden;
+}
+.notification--chat span{
+    border-bottom: none;
+}
+@keyframes up{
+    0%{
+        transform: translateY(1px);
+    }
+    50%{
+        transform: translateY(2px);
+    }
+}
+.chat__me{
+    align-self:flex-end;
+    text-align: end;
+    background-color: var(--color--chatMe);
+
+
+    max-width: 40%;
+
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 1rem;
+    border: 2.5px solid rgba(0, 0, 0, 0.76);
+
+}
+.me--mess{
+    margin-top: .2rem;
+    text-align: start;
+}
+
+
+.chat__friend{
+
+    max-width: 40%;
+
+    background-color: var(--color--chatYou);
+
+
+    margin: 1rem 0;
+    padding: 1rem;
+
+    border-radius: 1rem;
+    border: 2.5px solid rgba(0, 0, 0, 0.76);
+
+}
+.friend--name,.me--name{
+    font-size: 1.2rem;
+    font-weight:700;
+}
+
+#mess--img{
+    margin: 0 auto;
+    max-width: 100%;
+    max-height: 100%;
+
+    object-fit: cover;
+}
+
+::-webkit-scrollbar{
+    width: 0;
+}
+
+.chat--box{
+    width: 100%;
+    height: 50px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.chat--input{
+    position: relative;
+    width: 80%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+
+}
+.chat--img{
+ width: 20%;
+ height: 100%;
+ 
+ display: flex;
+ align-items: center;
+ justify-content: center;
+}
+.chat--img img{
+    width: 100px;
+    height: 90%;
+
+    border: 1.5px solid black;
+    border-radius: 2px;
+}
+.chat--input input{
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.644);
+    outline: none;
+    padding: 5px 10px;
+
+}
+
+
+
+#sendMess{
+    position: absolute;
+    right: 0;
+    padding: 5px 10px;
+    border: none;
+    background-color: transparent;
+
+    font-size: 1.6rem;
+    outline: none;
+
+    cursor: pointer;
+
+}
+
+.content--other{
+    height: 100%;
+    width: 20%;
+    margin-left: 1rem;
+    border: 2.5px solid rgba(0, 0, 0, 0.74);
+    border-radius: 10px;
+
+    overflow: hidden;
+
+
+}
+
+.other--information{
+    background-color:var(--color--boxInfo);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 30%;
+    padding: 5px 0;
+
+    position: relative;
+
+}
+.loadInfo{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+}
+.loadInfo__box{
+    width: 100%;
+    height: 100%;
+    background-color:var(--color--boxInfo);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.loadInfo__box span{
+    font-size: 1.6rem;
+    animation: loadUp 1s infinite;
+}
+
+@keyframes loadUp{
+    0%{
+        transform: translateY(10px);
+    }
+    50%{
+        transform: translateY(5px);
+    }
+}
+.other--information img{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: .5rem 0 0 0;
+    border: 2.5px solid rgba(0, 0, 0, 0.74);
+
+}
+.information--id{
+    font-size: 1rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+
+}
+.information--name{
+    margin-top: .5rem;
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+}
+
+.other--room{
+    background-color: var(--color--boxRoom);
+    height: 70%;
+    border-top: 2.5px solid black;
+    text-align: center;
+
+    font-size: 1.5rem;
+
+    padding: 5px 0;
+
+    overflow-y: scroll;
+}
+
+.other--room span{
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.other--room ul{
+    list-style: none;
+    text-align: center;
+    width: 100%;;
+}
+
+.other--room ul li{
+    margin: 2rem auto;
+    width: 200px;
+    background-color: var(--color--itemRoom);
+    border: 2.5px solid rgba(0, 0, 0, 0.658);
+    border-radius: 5px;
+}
+.other--room ul li a{
+    text-decoration: none;
+    color:rgba(0, 0, 0, 0.74);
+
+}
+.other--room ul li:hover{
+    background-color: #ffd5cd;
+}
+
+input[type=file]{
+    display: none;
+}
+
+#clickFile{
+    position: absolute;
+    right: 30px;
+    padding: 5px 10px;
+    border: none;
+    background-color: transparent;
+
+    font-size: 1.6rem;
+    outline: none;
+
+    cursor: pointer;
+
+}
+.room--add{
+    margin-bottom: 1rem;
+}
+#nameRoom{
+    border: none;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.514);
+    padding: 5px 5px 5px 0px;
+    background-color: transparent;
+    outline: none;
+}
+#create{
+    background-color: transparent;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+.info{
+    cursor: pointer;
+}
+

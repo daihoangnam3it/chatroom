@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/styleSignIn.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,400;0,700;1,500;1,600&display=swap" rel="stylesheet">
+    <title>Chat Room</title>
+  </head>
+  <body>
+    <div class="container__loadPage">
+        <div class="container__loadPage--box">
+            <span class="loadPage--notification">Web cùi nên chậm thông cảm nheeee ...</span>
+            <img src="/images/SignIn/load3.svg" alt="">
+        </div>
+    </div>
+    <div class="container">
+      <div class="container__box">
+        <div class="container__box--img">
+          <img src="/images/SignIn/1.svg" alt="" />
+        </div>
+        <div class="container__box--text">
+          <% include notification/messages%> 
+          <h1 class="container--title">1 cái web Cùi bắp</h1>
+          <a href="/signup" class="container--linkSignUp">Đăng ký ngay</a>
+          <div class="container--form">
+            <h3 class="container--nameForm">Đăng nhập</h3>
+            <form action="/users" class="form--signIn" method="POST">
+              <input
+                type="text"
+                name="username"
+                id="username"
+                required
+                placeholder="Tên đăng nhập"
+              />
+              <input
+                type="password"
+                name="pass"
+                id="pass"
+                required
+                placeholder="Mật khẩu"
+              />
+              <input type="submit" value="Đăng nhập" id="click" />
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="/javascripts/SignIn.js"></script>
+  </body>
+</html>

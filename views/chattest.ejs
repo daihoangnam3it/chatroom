@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box--chat--group{
+            overflow: auto;
+            overflow-x: hidden;
+            position: relative;
+            width: 500px;
+            height: 500px;
+            background-color: antiquewhite;
+        }
+        .box--chat{
+            display: flex;
+            flex-direction: column;
+        }
+        .active--list--me{
+            justify-content: end;
+            justify-items: end;
+            text-align: end;
+        }
+        #you{
+            align-self: start;
+            color: red;
+        }
+        #me{
+            
+            color: blue;
+        }
+        .load{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            background-color: pink;
+            opacity: 0;
+            visibility:hidden;
+        }
+    </style>
+</head>
+<body>
+    <input type="hidden" name="" id="idUser" value="<%=user._id%>">
+
+    <input type="text" id="idone" >
+    <input type="text" id="idtwo" >
+    
+    <span id="nameUser"><%= user.nickname%></span> <br>
+    <span>Danh sach dang onl</span>
+    <div class="box--active">
+
+    </div>
+
+    <div class="box--chat--group" >
+        <div class="box--chat"></div>
+        <div class="load">Đang tải ....</div>
+        
+    </div>
+    <span id="clickTest" style="cursor: pointer;">Click me</span>
+    <input type="text" id="messUser">
+    <span  id="clickSendMess" style="cursor: pointer;">Send Mess</span>
+    <input type="file" id="inputSendImg"> <br>
+    <img src="" alt="" id="imgSend" style="max-width: 100px;max-height: 100px;">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/javascripts/test.js"></script>
+</body>
+</html>

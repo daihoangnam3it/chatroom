@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,300;0,400;0,700;1,500;1,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="stylesheets/styleSignUp.css" />
+    <title>Chat room - sign up</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="container__box">
+        <div class="container__box--img">
+          <img src="images/SignUp/1.svg" alt="" />
+        </div>
+        <div class="container__box--text">
+          <h2 class="container--title">Đăng ký</h2>
+          <span class="container--titleTwo"
+            >Đăng ký để trải nghiệm 1 cái web củ chuối</span
+          >
+          <a href="/" class="container--link">Đã có tài khoản ??</a>
+          <div class="container--form">
+            <form action="/users/signup" class="form--signIn" method="POST">
+              <input
+                type="text"
+                name="username"
+                id="username"
+                required
+                placeholder="Tên đăng nhập"
+              />
+              <input
+                type="text"
+                name="nickname"
+                id="nickname"
+                required
+                placeholder="Biệt danh"
+              />
+              <input
+                type="password"
+                name="pass"
+                id="pass"
+                required
+                placeholder="Mật khẩu"
+              />
+             <input type="submit" value="Đăng ký"  id="click">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="notification">
+        <div class="notification__box">
+           <div class="notification--content">
+            <h3 class="notification--title">Đừng F12 web em</h3>
+            <ul>
+                <li>Tại đây tin nhắn mới sẽ không có báo đâu :D tự mà check để còn nhớ nhau</li>
+                <li>Web này cực kì cùi bắp f12 thôi là phá được rồi</li>
+                <li>Web này dùng để 3-4 người nhắn tin thôi nên không có nhiều tính năng đâu :D</li>
+            </ul>
+           </div>
+        </div>
+    </div>
+    <script src="javascripts/signUp.js"></script>
+  </body>
+</html>

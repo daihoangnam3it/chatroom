@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>document</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <style>
+      #mess--s{
+        color: brown;
+      }
+      #mess--g{
+        color: lavender;
+      }
+    </style>
+  </head>
+  <body>
+    <% include notification/messages %>
+    <input type="hidden" name="" id="idOther" value="<%= id %>">
+    
+    
+    <% if(user){%>
+      <div class="box--room">
+      
+      </div>
+        
+      <% mess.forEach(el=>{%>
+        <span><%= el.iduserone %> </span>
+      <span><%= el.idusertwo %> </span>
+      <div class="box--chat">
+
+        <% el.content.forEach(mess=>{%>
+          <% if(mess.iduser == user.id){%>
+            <span style="color: red;"><%= mess.mess %> </span> <br>
+            <% if(mess.img != null){%>
+              <img src="<%=mess.img%>"  alt="" style="max-width: 50px;height: 50px;"> <br>
+              <%} %> 
+            <%}else{%>
+              <span style="color: blue;"><%= mess.mess %> </span> <br>
+              <% if(mess.img != null){%>
+                <img src="<%=mess.img%>"  alt="" style="max-width: 50px;height: 50px;"> <br>
+                <%} %> 
+              
+              
+              <%} %> 
+              <%}) %> 
+            </div>
+              <% }) %> 
+        <input type="hidden" value="<%= user._id %>" id="userid">
+        <input type="hidden" id="nameHello" value="<%= user.nickname %>"></input>
+
+        <div class="text--box"> 
+        </div>
+        <input type="text" placeholder="Nhập tin nhắn" id="mess">
+        <button type="submit" id="send">Gửi</button>
+        <img src="" alt="" id="img">
+        <input type="file" id="file" name="file">;
+        <button type="submit" id="send--img">Gui anh</button>
+        <%}%>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/javascripts/chat.js"></script>
+
+
+    <!-- Đường dẫn đến thư mục socket -->
+  </body>
+</html>
